@@ -1,0 +1,18 @@
+apiVersion: eventstreams.ibm.com/v1beta1
+kind: KafkaUser
+metadata:
+  name: githubwebhooks
+  namespace: eventstreams
+  labels:
+    eventstreams.ibm.com/cluster: es
+spec:
+  authentication:
+    type: scram-sha-512
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: topic
+          name: GITHUB
+          patternType: literal
+        operation: Write

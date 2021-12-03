@@ -17,10 +17,10 @@ import org.apache.avro.generic.GenericRecord;
 
 public class MessageConsumer {
 
-	private static final String USERNAME = "REDACTED";
-	private static final String PASSWORD = "REDACTED";
+    private static final String USERNAME = "REDACTED";
+    private static final String PASSWORD = "REDACTED";
 
-	private static final String TOPIC_NAME = "archdemo.public.demo";
+    private static final String TOPIC_NAME = "archdemo.public.demo";
     private static final String GROUP_ID = "dale";
 
 
@@ -52,15 +52,15 @@ public class MessageConsumer {
         return props;
     }
 
-	public static void main(String[] args) {
-	    Properties props = prepareConfig();
-		try {
-		    KafkaConsumer<GenericRecord, GenericRecord> consumer = new KafkaConsumer<>(props);
-		    consumer.subscribe(Collections.singletonList(TOPIC_NAME));
+    public static void main(String[] args) {
+        Properties props = prepareConfig();
+        try {
+            KafkaConsumer<GenericRecord, GenericRecord> consumer = new KafkaConsumer<>(props);
+            consumer.subscribe(Collections.singletonList(TOPIC_NAME));
             System.out.println("==============================================");
-		    while (true) {
-		    	ConsumerRecords<GenericRecord, GenericRecord> records = consumer.poll(Duration.ofSeconds(10));
-		    	for (ConsumerRecord<GenericRecord, GenericRecord> record : records) {
+            while (true) {
+                ConsumerRecords<GenericRecord, GenericRecord> records = consumer.poll(Duration.ofSeconds(10));
+                for (ConsumerRecord<GenericRecord, GenericRecord> record : records) {
                     GenericRecord genericRecord = record.value();
                     if (genericRecord != null) {
                         System.out.println("operation  :  " + genericRecord.get("op"));
@@ -74,11 +74,11 @@ public class MessageConsumer {
                         }
                         System.out.println("==============================================");
                     }
-		    	}
-		    }
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+                }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: twitter
+  namespace: eventstreams
+type: Opaque
+stringData:
+  accessToken: REDACTED
+  accessTokenSecret: REDACTED
+  consumerKey: REDACTED
+  consumerKeySecret: REDACTED

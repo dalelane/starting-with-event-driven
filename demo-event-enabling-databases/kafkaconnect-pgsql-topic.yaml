@@ -1,0 +1,14 @@
+apiVersion: eventstreams.ibm.com/v1beta2
+kind: KafkaTopic
+metadata:
+  labels:
+    eventstreams.ibm.com/cluster: es
+  name: postgresql-archdemo-demo
+  namespace: eventstreams
+spec:
+  config:
+    min.insync.replicas: '1'
+    retention.ms: '101606400000'
+  partitions: 1
+  replicas: 3
+  topicName: archdemo.public.demo

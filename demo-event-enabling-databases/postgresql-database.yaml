@@ -1,0 +1,47 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: archdemo
+  namespace: postgresql
+spec:
+  port: 5432
+  databaseInitSQL:
+    name: archdemo-data-cm
+    key: demo_data.sql
+  proxy:
+    pgBouncer:
+      port: 5432
+      replicas: 1
+  backups:
+    pgbackrest:
+      repos:
+      - name: repo3
+        volume:
+          volumeClaimSpec:
+            accessModes:
+            - "ReadWriteOnce"
+            resources:
+              requests:
+                storage: 1Gi
+  openshift: true
+  patroni:
+    leaderLeaseDurationSeconds: 30
+    port: 8008
+    syncPeriodSeconds: 10
+  instances:
+    - dataVolumeClaimSpec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+      replicas: 1
+  postgresVersion: 13
+  users:
+    - name: demouser
+      databases:
+        - archdemo
+      options: SUPERUSER
+    - name: pgadmin
+      databases:
+        - archdemo

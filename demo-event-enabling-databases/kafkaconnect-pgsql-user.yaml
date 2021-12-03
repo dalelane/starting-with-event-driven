@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: archdemo-pguser-demouser
+  namespace: eventstreams
+type: Opaque
+data:
+  dbname: REDACTED
+  host: REDACTED
+  jdbc-uri: REDACTED
+  password: REDACTED
+  pgbouncer-host: REDACTED
+  pgbouncer-jdbc-uri: REDACTED
+  pgbouncer-port: REDACTED
+  pgbouncer-uri: REDACTED
+  port: REDACTED
+  uri: REDACTED
+  user: REDACTED
+  verifier: REDACTED

@@ -1,0 +1,33 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: archdemo-data-cm
+  namespace: postgresql
+data:
+  demo_data.sql: >
+    /* switch database */
+
+    \c archdemo
+
+    ALTER DEFAULT PRIVILEGES GRANT ALL ON TABLES TO pgadmin;
+
+    set schema 'public';
+
+    CREATE TABLE demo (uniqid INT NOT NULL, message VARCHAR(100) NOT NULL, email VARCHAR(100) NOT NULL, PRIMARY KEY (uniqid) );
+
+    INSERT INTO demo VALUES ( 1, 'Eat my shorts', 'bart@simpsons.com');
+    INSERT INTO demo VALUES ( 2, 'Scooby dooby doo', 'scooby@hannabarbera.com');
+    INSERT INTO demo VALUES ( 3, 'Whats up doc?', 'bugs@wb.com');
+    INSERT INTO demo VALUES ( 4, 'By the power of Grayskull', 'adam@mattel.com');
+    INSERT INTO demo VALUES ( 5, 'To infinity and beyond', 'buzz@pixar.com');
+    INSERT INTO demo VALUES ( 6, 'Cowabunga', 'michaelangelo@turtles.com');
+    INSERT INTO demo VALUES ( 7, 'Yabba dabba doo', 'fred@flintstones.com');
+    INSERT INTO demo VALUES ( 8, 'Thats all folks', 'porky@wb.com');
+    INSERT INTO demo VALUES ( 9, 'beep beep', 'roadrunner@wb.com');
+    INSERT INTO demo VALUES (10, 'Jinkies', 'velma@mysterymachine.com');
+    INSERT INTO demo VALUES (11, 'They killed Kenny', 'kyle@southpark.com');
+    INSERT INTO demo VALUES (12, 'Excellent', 'burns@simpsons.com');
+    INSERT INTO demo VALUES (13, 'Victory is mine', 'stewie@fox.com');
+    INSERT INTO demo VALUES (14, 'Sufferin succotash', 'daffy@wb.com');
+    INSERT INTO demo VALUES (15, 'Jeepers', 'daphne@mysterymachine.com');
+    INSERT INTO demo VALUES (16, 'goodnight everybody', 'yakko@wb.com');

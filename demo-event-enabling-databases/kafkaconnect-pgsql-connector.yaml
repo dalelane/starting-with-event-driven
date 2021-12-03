@@ -1,0 +1,44 @@
+apiVersion: eventstreams.ibm.com/v1alpha1
+kind: KafkaConnector
+metadata:
+  name: postgres-archdemo
+  namespace: eventstreams
+  labels:
+    eventstreams.ibm.com/cluster: demo-connectors
+spec:
+  class: "io.debezium.connector.postgresql.PostgresConnector"
+  tasksMax: 1
+  config:
+    #
+    plugin.name: pgoutput
+    #
+    database.hostname: ${file:/opt/kafka/external-configuration/postgres-demouser:host}
+    database.dbname : ${file:/opt/kafka/external-configuration/postgres-demouser:dbname}
+    database.port: ${file:/opt/kafka/external-configuration/postgres-demouser:port}
+    #
+    database.user: ${file:/opt/kafka/external-configuration/postgres-demouser:user}
+    database.password: ${file:/opt/kafka/external-configuration/postgres-demouser:password}
+    #
+    database.sslmode: verify-ca
+    database.sslrootcert: /opt/kafka/connect-certs/archdemo-cluster-cert/ca.crt
+    database.sslcert: /opt/kafka/connect-certs/archdemo-cluster-cert/tls.crt
+    database.sslkey: /opt/kafka/connect-certs/archdemo-cluster-cert/tls.key
+    #
+    database.server.name: archdemo
+    slot.name: archdemo
+    #
+    key.converter: io.apicurio.registry.utils.converter.AvroConverter
+    value.converter: io.apicurio.registry.utils.converter.AvroConverter
+    #
+    key.converter.apicurio.registry.global-id: io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy
+    value.converter.apicurio.registry.global-id: io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy
+    #
+    key.converter.apicurio.registry.url: https://kafka-connect-credentials:${file:/opt/kafka/connect-password/kafka-connect-credentials:password}@${file:/opt/kafka/external-configuration/schema-registry:host}
+    value.converter.apicurio.registry.url: https://kafka-connect-credentials:${file:/opt/kafka/connect-password/kafka-connect-credentials:password}@${file:/opt/kafka/external-configuration/schema-registry:host}
+    #
+    key.converter.apicurio.registry.request.ssl.truststore.location: /opt/kafka/connect-certs/es-cluster-ca-cert/ca.p12
+    key.converter.apicurio.registry.request.ssl.truststore.password: ${file:/opt/kafka/connect-certs/es-cluster-ca-cert:ca.password}
+    key.converter.apicurio.registry.request.ssl.truststore.type: PKCS12
+    value.converter.apicurio.registry.request.ssl.truststore.location: /opt/kafka/connect-certs/es-cluster-ca-cert/ca.p12
+    value.converter.apicurio.registry.request.ssl.truststore.password: ${file:/opt/kafka/connect-certs/es-cluster-ca-cert:ca.password}
+    value.converter.apicurio.registry.request.ssl.truststore.type: PKCS12
